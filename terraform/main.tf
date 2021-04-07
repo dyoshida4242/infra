@@ -64,20 +64,35 @@ resource "aws_route_table_association" "public_1c" {
   route_table_id = aws_route_table.public.id
 }
 
-// EC2
-// 最新のAMI(AmazonMachineImage)を取得
-//data "aws_ssm_parameter" "amzn2_ami" {
-//  name = "/aws/service/ami-amazon-linux-latest/amzn2-ami-hvm-x86_64-gp2"
-//}
-//
-//resource "aws_instance" "hoge" {
-//  ami           = "ami-0f9ae750e8274075b"
-//  instance_type = "t3.micro"
-//
-//  tags = {
-//    Name = "hogehoge"
-//  }
-//}
+data "aws_ssm_parameter" "amzn2_ami" {
+  name = "/aws/service/ami-amazon-linux-latest/amzn2-ami-hvm-x86_64-gp2"
+}
+
+resource "aws_instance" "a" {
+  ami                         = data.aws_ssm_parameter.amzn2_ami.value
+  instance_type               = "t3.nano"
+  key_name                    = "test-hoge" // AWSコンソールで生成したキーペアの名前
+  subnet_id                   = aws_subnet.public_1a.id
+  security_groups             = [aws_security_group.test.id]
+  associate_public_ip_address = true
+
+  tags = {
+    Name = "test-ec2-a"
+  }
+}
+
+resource "aws_instance" "c" {
+  ami                         = data.aws_ssm_parameter.amzn2_ami.value
+  instance_type               = "t3.nano"
+  key_name                    = "test-hoge" // AWSコンソールで生成したキーペアの名前
+  subnet_id                   = aws_subnet.public_1c.id
+  security_groups             = [aws_security_group.test.id]
+  associate_public_ip_address = true
+
+  tags = {
+    Name = "test-ec2-c"
+  }
+}
 
 // security-group
 resource "aws_security_group" "test" {
