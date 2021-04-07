@@ -133,3 +133,21 @@ resource "aws_security_group_rule" "egress" {
   cidr_blocks       = ["0.0.0.0/0"]
   security_group_id = aws_security_group.test.id
 }
+
+resource "aws_eip" "a" {
+  instance = aws_instance.a.id
+  vpc = true
+
+  tags = {
+    Name = "test-eip-a"
+  }
+}
+
+resource "aws_eip" "c" {
+  instance = aws_instance.c.id
+  vpc = true
+
+  tags = {
+    Name = "test-eip-c"
+  }
+}
