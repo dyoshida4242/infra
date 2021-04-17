@@ -40,6 +40,7 @@ resource "aws_internet_gateway" "main" {
   }
 }
 
+# パブリックルートテーブル
 resource "aws_route_table" "public" {
   vpc_id = aws_vpc.main.id
 
@@ -48,22 +49,27 @@ resource "aws_route_table" "public" {
   }
 }
 
+# パブリック用のルートテーブルのルート
+# デフォルトルート(0.0.0.0/0)はインターネットゲートウェイにつなぐ
 resource "aws_route" "public" {
   destination_cidr_block = "0.0.0.0/0"
   route_table_id         = aws_route_table.public.id
   gateway_id             = aws_internet_gateway.main.id
 }
 
+# パブリックサブネットとパブリックルートテーブルを紐付ける
 resource "aws_route_table_association" "public_1a" {
   subnet_id      = aws_subnet.public_1a.id
   route_table_id = aws_route_table.public.id
 }
 
+# パブリックサブネットとパブリックルートテーブルを紐付ける
 resource "aws_route_table_association" "public_1c" {
   subnet_id      = aws_subnet.public_1c.id
   route_table_id = aws_route_table.public.id
 }
 
+# 最新のAmazon Linux2のAMI IDを取得
 data "aws_ssm_parameter" "amzn2_ami" {
   name = "/aws/service/ami-amazon-linux-latest/amzn2-ami-hvm-x86_64-gp2"
 }
@@ -149,22 +155,5 @@ resource "aws_eip" "c" {
 
   tags = {
     Name = "test-eip-c"
-  }
-}
-
-data "aws_route53_zone" "main" {
-  name         = "d-yoshida.tk"
-  private_zone = false
-}
-
-resource "aws_route53_record" "main" {
-  type = "A"
-  name    = "d-yoshida.tk"
-  zone_id = data.aws_route53_zone.main.id
-
-  alias {
-    name                   = aws_lb.for_webserver.dns_name
-    zone_id                = aws_lb.for_webserver.zone_id
-    evaluate_target_health = true
   }
 }
