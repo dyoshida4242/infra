@@ -1,0 +1,23 @@
+- name: Install nginx
+  become: yes
+  yum:
+    name: http://nginx.org/packages/centos/7/noarch/RPMS/nginx-release-centos-7-0.el7.ngx.noarch.rpm
+    state: present
+    lock_timeout: 180
+
+- name: Install nginx package
+  yum:
+    name: nginx
+    state: present
+    lock_timeout: 180
+
+- name: Put local.conf
+  template:
+    src: roles/nginx/templates/nginx.conf.j2
+    dest: /etc/nginx/nginx.conf
+
+- name: Set auto start nginx
+  command: chkconfig nginx on
+
+- name: Restart nginx
+  command: service nginx restart

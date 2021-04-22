@@ -1,0 +1,44 @@
+# rubyのインストールに必要なパッケージをインストール
+- name: Install packages
+  yum:
+    name: '{{ item }}'
+    state: latest
+    lock_timeout: 180
+  with_items:
+    - openssl-devel
+    - sqlite-devel
+    - gcc
+    - gcc-c++
+    - readline-devel
+    - libselinux-python
+
+# rbenvをインストール
+- name: Install rbenv
+  git:
+    repo: https://github.com/sstephenson/rbenv.git
+    dest: /usr/local/rbenv
+
+- name: Edit bashrc
+  template:
+    src: roles/ruby/templates/rbenv_system.sh.j2
+    dest: /etc/profile.d/rbenv.sh
+#    owner: '{{ deploy_user }}'
+#    group: '{{ deploy_group }}'
+
+- name: Install ruby-build
+  git:
+    repo: https://github.com/sstephenson/ruby-build.git
+    dest: /usr/local/rbenv/plugins/ruby-build
+
+- name: Install Ruby
+  shell: bash -lc "CONFIGURE_OPTS="--disable-install-rdoc" rbenv install -s {{ ruby_version }}"
+
+- name: Set default Ruby version
+  shell: bash -lc "rbenv global {{ ruby_version }} && rbenv rehash"
+
+- name: Install bundler and so on
+  shell: bash -lc "gem install {{ item }}"
+  with_items:
+    - rbenv-rehash
+    - bundler
+    - rails

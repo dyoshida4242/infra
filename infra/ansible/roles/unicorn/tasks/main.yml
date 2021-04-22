@@ -1,0 +1,19 @@
+- name: Put unicorn.sh
+  template:
+    src: roles/unicorn/templates/unicorn.sh.j2
+    dest: /var/www/unicorn.sh
+    #    owner: '{{ deploy_user }}'
+    #    group: '{{ deploy_group }}'
+    mode: 0755
+
+- name: Put unicorn.service
+  template:
+    src: roles/unicorn/templates/unicorn.service.j2
+    dest: /lib/systemd/system/unicorn.service
+
+- name: start service unicorn
+  systemd:
+    name: unicorn
+    state: started
+    daemon_reload: yes
+    enabled: yes

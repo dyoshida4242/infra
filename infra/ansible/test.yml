@@ -1,8 +1,18 @@
 ---
 - name: Playbook for test
   hosts: web
+  vars:
+    env: test
+    remote_role: app # define server role
   become: yes #sudo権限でコマンドを実行できる
+  vars_files:
+    - vars/common.yml
+    - vars/test.yml
   gather_facts: false
   roles:
-    - apache
+    - env
     - git
+    - ruby
+    - nginx
+    - mysql
+    - unicorn

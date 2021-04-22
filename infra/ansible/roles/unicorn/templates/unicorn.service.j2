@@ -1,0 +1,12 @@
+[Unit]
+Description=unicorn
+
+[Service]
+WorkingDirectory=/var/www/loof-api-server/current
+Environment=RBENV_ROOT=/usr/local/rbenv
+Environment=RBENV_VERSION=2.6.5
+PIDFile=/var/www/loof-api-server/current/tmp/pids/unicorn.pid
+ExecStart=/var/www/unicorn.sh start
+
+[Install]
+WantedBy=multi-user.target
