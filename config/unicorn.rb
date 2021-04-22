@@ -26,13 +26,13 @@ stdout_path "#{rails_root}/log/unicorn.log"
 # before_fork
 # それぞれのワーカプロセスを fork する前にマスタープロセスから呼ばれる。 Unicorn::Worker オブジェクトを作成したらすぐ呼ばれている
 # 読んでもいまいち分からなかったが、参考記事　→　http://ganmacs.hatenablog.com/entry/2017/05/21/170038
-before_fork do |server, worker|
-  old_pid = "#{server.config[:pid]}.oldbin"
-  if old_pid != server.pid
-    begin
-      sig = (worker.nr + 1) >= server.worker_processes ? :QUIT : :TTOU
-      Process.kill(sig, File.read(old_pid).to_i)
-    rescue Errno::ENOENT, Errno::ESRCH
-    end
-  end
-end
+# before_fork do |server, worker|
+#   old_pid = "#{server.config[:pid]}.oldbin"
+#   if old_pid != server.pid
+#     begin
+#       sig = (worker.nr + 1) >= server.worker_processes ? :QUIT : :TTOU
+#       Process.kill(sig, File.read(old_pid).to_i)
+#     rescue Errno::ENOENT, Errno::ESRCH
+#     end
+#   end
+# end
