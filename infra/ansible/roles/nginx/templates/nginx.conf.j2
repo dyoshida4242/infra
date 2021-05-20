@@ -4,7 +4,7 @@ events {
 
 http {
   upstream unicorn {
-    server unix:/var/www/infra/current/tmp/sockets/unicorn.sock;
+    server unix:/var/www/infra/tmp/sockets/unicorn.sock;
   }
 
   server {
