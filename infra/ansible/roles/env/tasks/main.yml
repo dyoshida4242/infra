@@ -1,0 +1,35 @@
+- name: Create app dir
+  become: yes
+  file:
+    path: /var/www/infra
+    state: directory
+    owner: 'ec2-user'
+    mode: 0777
+
+- name: Create env file
+  become: yes
+  file:
+    path: /etc/profile.d/vars.sh
+    state: touch
+    owner: 'ec2-user'
+    mode: 0777
+
+- name: Add DB_HOST
+  lineinfile: >
+    dest='/etc/profile.d/vars.sh'
+    line='export DB_HOST={{ db_host }}'
+
+- name: Add DB_NAME
+  lineinfile: >
+    dest='/etc/profile.d/vars.sh'
+    line='export DB_NAME={{ db_name }}'
+
+- name: Add DB_USER
+  lineinfile: >
+    dest='/etc/profile.d/vars.sh'
+    line='export DB_USER={{ db_user }}'
+
+- name: Add DB_PASSWORD
+  lineinfile: >
+    dest='/etc/profile.d/vars.sh'
+    line='export DB_PASSWORD={{ db_pass }}'

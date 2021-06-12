@@ -1,8 +1,0 @@
----
-- name: Playbook for test
-  hosts: web
-  become: yes #sudo権限でコマンドを実行できる
-  gather_facts: false
-  roles:
-    - apache
-    - git

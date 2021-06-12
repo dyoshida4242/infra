@@ -1,0 +1,12 @@
+[Unit]
+Description=unicorn
+
+[Service]
+WorkingDirectory=/var/www/infra/current
+Environment=RBENV_ROOT=/usr/local/rbenv
+Environment=RBENV_VERSION=2.7.1
+PIDFile=/var/www/infra/current/tmp/pids/unicorn.pid
+ExecStart=/var/www/unicorn.sh start
+
+[Install]
+WantedBy=multi-user.target

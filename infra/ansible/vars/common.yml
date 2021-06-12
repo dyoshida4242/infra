@@ -1,0 +1,17 @@
+ruby_version: 2.7.1
+app_name: infra
+#deploy_user: ec2_user
+#deploy_user_password:
+#deploy_group: vagrant
+db_host: 127.0.0.1
+db_user: root
+db_pass: password
+db_name: local
+#local_db_user: local
+#key_base: eb626320df456c90db5c47bacfb0da1d3aa39d3e2d1cab44beee353bbcbbce5739223c9d721423dd5e67303127ec9bfedce0b0ad40d01bd4502b64bf991c3ec1
+#public_ip: 52.185.128.113
+#ansible_user: vagrant
+#group_list:
+#  - { name: 'admin' }
+#  - { name: 'deployer' }
+#  - { name: 'developer' }

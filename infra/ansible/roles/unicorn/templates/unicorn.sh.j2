@@ -1,0 +1,49 @@
+#!/bin/sh
+NAME="Unicorn"
+ENV=staging
+
+APP_DIR="/var/www/infra"
+PID="/var/www/infra/tmp/pids/unicorn.pid"
+CONF="${APP_DIR}/config/unicorn/production.rb"
+
+start()
+{
+    if [ -e $PID ]; then
+        echo "already started"
+        exit 1
+    fi
+    echo "start unicorn"
+    /bin/bash -l -c "RAILS_ENV=${ENV} bundle exec unicorn -c ${CONF} -E deployment -D"
+}
+stop()
+{
+    if [ ! -e $PID ]; then
+        echo "${NAME} already stopped"
+        exit 1
+    fi
+    echo "stop ${NAME}"
+    kill -QUIT `cat ${PID}`
+}
+
+restart()
+{
+    stop
+nnn    sleep 3
+    start
+}
+
+case "$1" in
+    start)
+        start
+        ;;
+    stop)
+        stop
+        ;;
+    restart)
+        restart
+        ;;
+    *)
+    echo "Syntax Error"
+    exit 2
+    ;;
+esac
