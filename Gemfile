@@ -12,7 +12,7 @@ gem 'turbolinks', '~> 5'
 gem 'jbuilder', '~> 2.7'
 gem 'bootsnap', '>= 1.4.4', require: false
 # Use Unicorn as the app server
-gem 'unicorn'
+gem 'unicorn', '5.4.1'
 gem 'unicorn-worker-killer'
 
 group :development, :test do

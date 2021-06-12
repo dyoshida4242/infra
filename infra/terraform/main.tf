@@ -76,7 +76,7 @@ data "aws_ssm_parameter" "amzn2_ami" {
 
 resource "aws_instance" "a" {
   ami                         = data.aws_ssm_parameter.amzn2_ami.value
-  instance_type               = "t3.nano"
+  instance_type               = "t2.micro"
   key_name                    = "test-hoge" // AWSコンソールで生成したキーペアの名前
   subnet_id                   = aws_subnet.public_1a.id
   security_groups             = [aws_security_group.test.id]
@@ -89,7 +89,7 @@ resource "aws_instance" "a" {
 
 resource "aws_instance" "c" {
   ami                         = data.aws_ssm_parameter.amzn2_ami.value
-  instance_type               = "t3.nano"
+  instance_type               = "t2.micro"
   key_name                    = "test-hoge" // AWSコンソールで生成したキーペアの名前
   subnet_id                   = aws_subnet.public_1c.id
   security_groups             = [aws_security_group.test.id]
