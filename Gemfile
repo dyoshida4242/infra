@@ -12,7 +12,7 @@ gem 'turbolinks', '~> 5'
 gem 'jbuilder', '~> 2.7'
 gem 'bootsnap', '>= 1.4.4', require: false
 # Use Unicorn as the app server
-gem 'unicorn'
+gem 'unicorn', '5.4.1'
 gem 'unicorn-worker-killer'
 
 group :development, :test do
@@ -24,9 +24,10 @@ group :development do
   gem 'rack-mini-profiler', '~> 2.0'
   gem 'listen', '~> 3.3'
   gem 'spring'
-  gem 'capistrano', '~> 3.0.1'
+  gem 'capistrano', '~> 3.4.1'
   gem 'capistrano-rails'
   gem 'capistrano-bundler'
+  gem 'capistrano-rbenv'
 end
 
 group :test do
